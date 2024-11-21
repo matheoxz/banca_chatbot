@@ -1,1 +1,1 @@
-python -m streamlit run chat.py
+python -m streamlit run main.py
