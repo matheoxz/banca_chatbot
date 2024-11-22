@@ -1,3 +1,8 @@
+'''
+Este módulo define vários modelos Pydantic para representar entidades relacionadas ao sistema de definição de bancas de mestrado. 
+Estes modelos são utilizados para serializar e desserializar dados entre diferentes partes do sistema e enviados às LLMs para resposta com modelo estrturado.
+'''
+
 import ast
 from typing import List, Optional
 from pydantic import BaseModel, Field
@@ -83,7 +88,7 @@ class ListaProfessores(BaseModel):
 class RelevanciaProfessor(BaseModel):
     '''Classe que representa a relevância do professor para um trabalho de mestrado'''
     relevante: Optional[bool] = Field(default=None, title="Relevante", description="Se o professor é relevante para o trabalho de mestrado")
-    justificativa: Optional[str] = Field(default=None, title="Justificativa", description="Justificativa da relevância ou falta de relevancia do professor para o trabalho de mestrado")
+    justificativa: str = Field(..., title="Justificativa", description="Justificativa da relevância ou falta de relevancia do professor para o trabalho de mestrado")
     nome: Optional[str] = Field(default=None, title="Nome", description="Professor que avalia o trabalho de mestrado")
 
 class ListaRelevanciaProfessores(BaseModel):
