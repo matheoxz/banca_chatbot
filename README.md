@@ -67,7 +67,7 @@ Essas variáveis de ambiente serão carregadas automaticamente pela aplicação,
 
 ### Configuração do Arquivo .env para Gemini
 
-Para utilizar os modelos GEMINI e OLLAMA, é necessário configurar a variável de ambiente `GOOGLE_APPLICATION_CREDENTIALS`. Siga os passos abaixo para gerar e configurar suas credenciais no Google Cloud com Vertex AI:
+Para utilizar os modelos GEMINI, é necessário configurar a variável de ambiente `GOOGLE_APPLICATION_CREDENTIALS`. Siga os passos abaixo para gerar e configurar suas credenciais no Google Cloud com Vertex AI:
 
 1. **Criação do Projeto no Google Cloud**:
     - Acesse o [Google Cloud Console](https://console.cloud.google.com/).
@@ -98,7 +98,7 @@ Para utilizar os modelos GEMINI e OLLAMA, é necessário configurar a variável 
 
 6. **Salve o arquivo `.env`**.
 
-Com essas configurações, a aplicação poderá acessar os modelos GEMINI e OLLAMA utilizando as credenciais do Google Cloud.
+Com essas configurações, a aplicação poderá acessar os modelos GEMINI utilizando as credenciais do Google Cloud.
 
 
 ## Estrutura do Projeto
