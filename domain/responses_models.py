@@ -37,6 +37,17 @@ class Professor(BaseModel):
             print(f"Erro ao deserializar professor da base: {e}")
             print(f"Dado do professor: {data[0].page_content}")
             return Professor()
+    
+    def from_Document(doc: Document):
+        '''Converte um Document em um objeto Professor'''
+        try:
+            dict = ast.literal_eval(doc.page_content)
+            prof = Professor(**dict)
+            return prof
+        except Exception as e:
+            print(f"Erro ao deserializar professor de JSON: {e}")
+            print(f"Dado do professor: {doc.page_content}")
+            return Professor()
         
 
 class ListaProfessores(BaseModel):

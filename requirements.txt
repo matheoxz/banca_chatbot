@@ -2,6 +2,7 @@ python-dotenv
 langchain
 langchain_openai
 langchain-mistralai
+langchain_google_vertexai
 chromadb
 langchain_chroma
 streamlit

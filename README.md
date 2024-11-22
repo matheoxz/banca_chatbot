@@ -50,7 +50,7 @@ A aplicação coleta o título, resumo e palavras-chave do trabalho de mestrado 
 6. **Checagem de Relevância**:
     - A função `checa_relevancia` no arquivo `definidor_banca.py` verifica a relevância dos professores encontrados, utilizando um modelo de linguagem para fornecer justificativas detalhadas.
 
-## Configuração do Arquivo .env
+## Configuração do Arquivo .env para ChatGPT
 
 Para que a aplicação funcione corretamente, é necessário criar um arquivo `.env` na raiz do projeto para armazenar as API Keys necessárias. Siga os passos abaixo para configurar o arquivo `.env`:
 
@@ -59,13 +59,47 @@ Para que a aplicação funcione corretamente, é necessário criar um arquivo `.
 2. Adicione as seguintes linhas ao arquivo `.env`, substituindo `<SUA_API_KEY>` pelas suas chaves de API correspondentes:
     ```plaintext
     OPENAI_API_KEY=<SUA_API_KEY_OPENAI>
-    MISTRAL_API_KEY=<SUA_API_KEY_MISTRAL>
-    HF_APIKEY = <SUA_API_KEY_HUGGINGFACE>
     ```
 
 3. Salve o arquivo `.env`.
 
 Essas variáveis de ambiente serão carregadas automaticamente pela aplicação, permitindo o acesso às APIs necessárias para o funcionamento do sistema.
+
+### Configuração do Arquivo .env para Gemini
+
+Para utilizar os modelos GEMINI e OLLAMA, é necessário configurar a variável de ambiente `GOOGLE_APPLICATION_CREDENTIALS`. Siga os passos abaixo para gerar e configurar suas credenciais no Google Cloud com Vertex AI:
+
+1. **Criação do Projeto no Google Cloud**:
+    - Acesse o [Google Cloud Console](https://console.cloud.google.com/).
+    - Crie um novo projeto ou selecione um projeto existente.
+
+2. **Ativação da API Vertex AI**:
+    - No painel de navegação, vá para "APIs e serviços" > "Biblioteca".
+    - Pesquise por "Vertex AI" e ative a API.
+
+3. **Criação da Conta de Serviço**:
+    - Vá para "IAM e administrador" > "Contas de serviço".
+    - Clique em "Criar conta de serviço".
+    - Preencha os detalhes da conta de serviço e clique em "Criar e continuar".
+    - Conceda à conta de serviço o papel "Administrador do Vertex AI" e clique em "Concluído".
+
+4. **Geração da Chave JSON**:
+    - Na lista de contas de serviço, encontre a conta de serviço criada.
+    - Clique nos três pontos ao lado da conta de serviço e selecione "Gerenciar chaves".
+    - Clique em "Adicionar chave" > "Criar nova chave".
+    - Selecione o formato JSON e clique em "Criar". O arquivo JSON será baixado para o seu computador.
+
+5. **Configuração da Variável de Ambiente**:
+    - Mova o arquivo JSON para o diretório raiz do seu projeto.
+    - Adicione a seguinte linha ao seu arquivo `.env`, substituindo `<CAMINHO_PARA_O_ARQUIVO_JSON>` pelo caminho para o arquivo JSON:
+    ```plaintext
+    GOOGLE_APPLICATION_CREDENTIALS=<CAMINHO_PARA_O_ARQUIVO_JSON>
+    ```
+
+6. **Salve o arquivo `.env`**.
+
+Com essas configurações, a aplicação poderá acessar os modelos GEMINI e OLLAMA utilizando as credenciais do Google Cloud.
+
 
 ## Estrutura do Projeto
 

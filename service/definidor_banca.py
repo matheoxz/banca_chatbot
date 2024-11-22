@@ -2,18 +2,18 @@ import streamlit as st
 from langchain_chroma import Chroma
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_openai import ChatOpenAI
-from langchain_mistralai import ChatMistralAI
+from langchain_google_vertexai import ChatVertexAI
 
 from domain.enums import ModelEnum
 from domain.responses_models import ListaPalavrasChave, ListaVariacoesTitulo, ListaProfessores, Professor, ListaRelevanciaProfessores
 
 def define_banca(titulo: str, resumo: str, palavras_chave: str, modelo: ModelEnum, vector_store: Chroma): 
 
-    if modelo == ModelEnum.CHATGPT.value:
-        llm = ChatOpenAI(model="gpt-4o-mini")
-    elif modelo == ModelEnum.MISTRAL.value:
-        llm = ChatMistralAI(model="mistral-large-latest")
-
+    match modelo:
+        case ModelEnum.CHATGPT.value:
+            llm = ChatOpenAI(model="gpt-4o-mini")
+        case ModelEnum.GEMINI.value:
+            llm = ChatVertexAI(model="gemini-1.5-flash-001")
 
     with st.status("Definindo banca", expanded=True):
         palavras_chave_extraidas_titulo = extrai_palavraschave_titulo(titulo, resumo, llm)
