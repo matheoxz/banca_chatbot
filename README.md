@@ -34,6 +34,7 @@ A aplicação coleta o título, resumo e palavras-chave do trabalho de mestrado 
 
 1. **Carregamento dos Professores**:
     - A função `carrega_professores` no arquivo `base_professores.py` carrega os dados dos professores a partir de um banco de dados vetorial.
+    - Os dados de professores foram extraídos da plataforma Lattes num arquivo JSON através do código do repositório [Lattes-Downloader](https://github.com/joaotinti75/Lattes-Downloader).
 
 2. **Definição da Banca**:
     - A função `define_banca` no arquivo `definidor_banca.py` é responsável por todo o processo de definição da banca. Ela utiliza modelos de linguagem para extrair palavras-chave, gerar variações de título e procurar professores relevantes.

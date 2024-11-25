@@ -70,7 +70,6 @@ def popula_databasevetorial(persist_directory, embeddings):
         vectordb = Chroma(collection_name="professores", persist_directory= persist_directory, embedding_function = embeddings)
         
         for i, doc in enumerate(professores_documentos):
-            print("Adicionando professor: ", i)
             try:
                 vectordb.add_documents([doc], id=str(uuid4()))
             except:
