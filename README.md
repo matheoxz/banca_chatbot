@@ -1,6 +1,6 @@
 # Auxiliar para a Definição de Bancas com base em Sistema Lattes
 
-Este projeto é uma aplicação Streamlit que auxilia na definição de bancas de mestrado com base em informações do Sistema Lattes. A aplicação utiliza modelos de linguagem (LLMs) para analisar o título, resumo e palavras-chave do trabalho de mestrado e sugerir professores relevantes para compor a banca.
+Este projeto é uma aplicação Streamlit que auxilia na definição de bancas de mestrado com base em informações do Sistema Lattes. A aplicação utiliza modelos de linguagem (LLMs) para analisar o título, resumo e palavras-chave do trabalho de mestrado e sugerir professores relevantes para compor a banca através da téninca de Retrieval Augmented Generation (RAG).
 
 ## Instalação
 
@@ -50,6 +50,26 @@ A aplicação coleta o título, resumo e palavras-chave do trabalho de mestrado 
 
 6. **Checagem de Relevância**:
     - A função `checa_relevancia` no arquivo `definidor_banca.py` verifica a relevância dos professores encontrados, utilizando um modelo de linguagem para fornecer justificativas detalhadas.
+
+## O que é RAG (Retrieval Augmented Generation)
+
+Retrieval Augmented Generation (RAG) é uma técnica que combina a recuperação de informações com a geração de texto. Em vez de depender exclusivamente de um modelo de linguagem para gerar respostas, o RAG primeiro recupera informações relevantes de uma base de dados e, em seguida, utiliza essas informações para gerar respostas mais precisas e contextualmente relevantes. Isso é particularmente útil em cenários onde a precisão e a relevância das informações são cruciais.
+
+## Utilização do Banco Vetorial Chroma
+
+Na aplicação, o banco vetorial Chroma é utilizado para armazenar e recuperar informações sobre os professores. O Chroma permite a indexação e a busca eficiente de vetores de alta dimensão, que representam os títulos, palavras-chave e resumos dos trabalhos de mestrado. O processo funciona da seguinte maneira:
+
+1. **Indexação dos Dados dos Professores**:
+    - Os dados dos professores, incluindo seu nome, áreas de especialização e resumo, são convertidos em vetores e armazenados no banco vetorial Chroma.
+
+2. **Busca por Informações Relevantes**:
+    - Quando os títulos, resumo ou conjunto de palavras-chave são fornecidos, esses dados são convertidos em vetores.
+    - O Chroma é então utilizado para buscar vetores semelhantes no banco de dados, identificando professores cujas áreas de especialização correspondem aos tópicos do trabalho de mestrado.
+
+3. **Integração com RAG**:
+    - As informações recuperadas pelo Chroma são passadas para o modelo de linguagem, que avalia a relevância dos professores encontrados.
+    - O modelo de linguagem gera justificativas detalhadas sobre a relevância dos professores encontrados, ajudando na definição da banca de mestrado.
+    - Apesar de ser uma técnica poderosa, os modelos de linguagem podem ser limitados em sua capacidade de gerar respostas precisas e contextualmente relevantes.
 
 ## Configuração do Arquivo .env para ChatGPT
 
