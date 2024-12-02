@@ -5,7 +5,7 @@ from langchain_openai import ChatOpenAI
 from langchain_google_vertexai import ChatVertexAI
 
 from domain.enums import ModelEnum
-from domain.responses_models import ListaPalavrasChave, ListaVariacoesTitulo, ListaProfessores, Professor, ListaRelevanciaProfessores
+from domain.responses_models import ListaPalavrasChave, ListaVariacoesTitulo, ListaProfessores, Professor, ListaRelevanciaProfessores, ListaTraduzida
 
 def define_banca(titulo: str, resumo: str, palavras_chave: str, modelo: ModelEnum, vector_store: Chroma): 
     """
@@ -35,6 +35,11 @@ def define_banca(titulo: str, resumo: str, palavras_chave: str, modelo: ModelEnu
         # Gera variações do título
         variacoes_titulo = gera_variacoes_titulo(titulo, resumo, set_palavraschave, llm)
         variacoes_titulo.titulos.extend([titulo, resumo])
+
+        # Traduz título e resumo para inglês
+        traduzidos = traduz_titulos_e_palavraschave(variacoes_titulo.titulos, set_palavraschave, llm)
+        set_palavraschave = set_palavraschave.union(set(traduzidos.palavras_chave))
+        variacoes_titulo.titulos.extend(traduzidos.palavras_chave)
 
         # Procura professores relevantes
         lista_professores = procura_professores(vector_store, set_palavraschave, variacoes_titulo).ordena_por_relevancia()
@@ -100,6 +105,35 @@ def gera_variacoes_titulo(titulo: str, resumo:str, palavraschave: set, llm: Base
     st.write(f"Titulos para mestrado: ")
     st.write(resposta.titulos)
 
+    return resposta
+
+def traduz_titulos_e_palavraschave(titulos: list[str], palavras_chave: set, llm: BaseChatModel) -> ListaTraduzida:
+    """
+    Traduz uma lista de títulos para o inglês.
+    Args:
+        titulos (list[str]): Lista de títulos a serem traduzidos.
+        llm (BaseChatModel): Modelo de linguagem utilizado para a tradução.
+    Returns:
+        list[str]: Lista de títulos traduzidos para o inglês.
+    """
+    traducao_prompt = f'''
+        Translate the following titles and keywords to English:
+
+        titles: 
+        {titulos}
+        
+
+        keywords:
+        {palavras_chave}
+    '''
+    st.write("Traduzindo títulos e palavras-chave para o inglês...")
+
+    #Chamada ao LLM para traduzir os títulos
+    structured_llm = llm.with_structured_output(ListaTraduzida)
+    resposta = structured_llm.invoke(traducao_prompt)
+
+    st.write(f"Títulos e palavras-chave traduzidos: ")
+    st.write(resposta)
     return resposta
 
 def procura_professores(vector_store: Chroma, set_palavraschave: set, variacoes_titulo: ListaVariacoesTitulo) -> ListaProfessores:

@@ -19,9 +19,17 @@ class ListaVariacoesTitulo(BaseModel):
     titulos: List[str] = Field(..., title="Lista de titulos", 
                                       description="Possíveis títulos para um trabalho de mestrado")
 
+class ListaTraduzida(BaseModel):
+    '''Class that represents a list of translated titles and keywords'''
+    titulos: List[str] = Field(..., title="List of titles in English", 
+                                      description="Possible titles for a master's thesis in English")
+    palavras_chave: List[str] = Field(..., title="List of keywords in English", 
+                                      description="List of keywords and research areas that describe the theme of the master's thesis in English")
+
 class Professor(BaseModel):
     '''Classe que representa um professor'''
     nome: Optional[str] = Field(default=None, title="Nome do professor", description="Nome do professor")
+    #uuid: Optional[str] = Field(default=None, title="UUID do professor", description="UUID do professor")
     resumo: Optional[str] = Field(default=None, title="Resumo do professor", description="Resumo do professor")
     linhas_pesquisa: Optional[List[str]] = Field(default=None, title="Área de atuação do professor", description="Área de atuação do professor")
     foto: Optional[str] = Field(default=None, title="Foto do professor", description="Foto do professor")
@@ -90,6 +98,7 @@ class RelevanciaProfessor(BaseModel):
     relevante: Optional[bool] = Field(default=None, title="Relevante", description="Se o professor é relevante para o trabalho de mestrado")
     justificativa: str = Field(..., title="Justificativa", description="Justificativa da relevância ou falta de relevancia do professor para o trabalho de mestrado")
     nome: Optional[str] = Field(default=None, title="Nome", description="Professor que avalia o trabalho de mestrado")
+    #uuid: Optional[str] = Field(default=None, title="UUID", description="UUID do professor que avalia o trabalho de mestrado")
 
 class ListaRelevanciaProfessores(BaseModel):
     '''Classe que representa a lista de relevância dos professores para um trabalho de mestrado'''
