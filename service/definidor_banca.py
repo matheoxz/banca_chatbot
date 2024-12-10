@@ -148,7 +148,7 @@ def procura_professores(vector_store: Chroma, set_palavraschave: set, variacoes_
     Returns:
         ListaProfessores: Lista de professores encontrados com base na busca de similaridade.
     """
-    st.write("Procurando professores relevantes...")
+    st.write("Procurando professores...")
 
     # Busca os professores mais próximos para cada variação de título
     lista_professores = ListaProfessores(professores=[])
@@ -176,8 +176,8 @@ def checa_relevancia(resumo, llm, set_palavraschave, variacoes_titulo, lista_pro
     contextualize_q_system_prompt = f'''
             Você é um sistema assistente de definição de bancas de mestrado.
             Você recebe uma lista de possíveis títulos para um trabalho de mestrado,  o seu resumo e uma lista de palavras chave que descrevem a área de pesquisa e objetivos.
-            Você receberá uma lista de professores que podem ser candidatos a avaliar o trabalho de mestrado, você deve dizer se cada professor é relevante ou não para o trabalho no campo "relevancia" através de um booleano
-            Para cada professor você deve fornecer uma justificativa para a sua relevância ou falta de relevância com o trabalho de mestrado, em um parágrafo de texto, citando as áreas de pesquisa relevantes do professor.
+            Você receberá uma lista de professores que podem ser candidatos a avaliar o trabalho de mestrado, você deve fornecer uma justificativa para a sua relevância ou falta de relevância com o trabalho de mestrado, 
+            em um parágrafo de texto, citando as áreas de pesquisa relevantes do professor. Em caso do professor não ter relevância com o trabalho de mestrado, você deve informar que o professor talvez não seja relevante e justificar o motivo.
             Os professores devem ser escolhidos de acordo com a familiaridade com algum dos temas tratados no trabalho de mestrado.
             Titulos: {variacoes_titulo.titulos}
             Resumo: {resumo}
@@ -197,8 +197,6 @@ def checa_relevancia(resumo, llm, set_palavraschave, variacoes_titulo, lista_pro
     
     # Atualiza a relevância dos professores na lista
     inclui_relevancia_professor(lista_relevancia, lista_professores_)
-
-    st.write(f"{sum(1 for p in lista_professores_ if p.relevante)} professores relevantes encontrados!")
 
     return lista_professores_
 
@@ -245,7 +243,6 @@ def inclui_relevancia_professor(lista_relevancia:ListaRelevanciaProfessores, pro
     for professor in professores:
         professor_na_lista = next((p for p in lista_relevancia.relevancia_professores if p.nome == professor.nome), None)
         if professor_na_lista is not None:
-            professor.relevante = professor_na_lista.relevante
             professor.justificativa_relevancia = professor_na_lista.justificativa
         else:
             print(f"Professor {professor.nome} não encontrado na lista de relevância")

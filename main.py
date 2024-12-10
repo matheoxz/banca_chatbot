@@ -35,26 +35,15 @@ if middle.button("Enviar", use_container_width=True):
         llm_model,
         vector_store)
     
-    # Filtra os professores relevantes
-    response_banca = [p for p in response if p.relevante]
+    #ordenando a lista de professores por pontuação
+    response.sort(key=lambda p: p.pontuacao, reverse=True)
     st.subheader("Possíveis professores para a banca")
     st.header(st.session_state.master_title)
     
-    # Exibe os professores relevantes
-    for professor in response_banca:
+    # Exibe os professores que podem compor a banca
+    for professor in response:
         left, middle = st.container(border=True).columns((3, 6))
         left.image(professor.foto, caption=professor.nome)
         middle.subheader(professor.nome)
         middle.write(professor.justificativa_relevancia)
         middle.metric(f"Relevância: ", round(mean(professor.lista_similaridade) * 100, 2))
-    
-    # Filtra os professores não relevantes
-    response_nao_relevante = [p for p in response if not p.relevante]
-    st.header("Professores não relevantes")
-    
-    # Exibe os professores não relevantes
-    for professor in response_nao_relevante:
-        middle, right = st.container(border=True).columns((6, 3))
-        right.image(professor.foto, caption=professor.nome)
-        middle.write(professor.justificativa_relevancia)
-        middle.metric("Relevância: ", round(mean(professor.lista_similaridade) * 100, 2))

@@ -36,7 +36,6 @@ class Professor(BaseModel):
     lista_similaridade: Optional[List[float]] = Field(default=[], title="Similaridades do professor com o tema do trabalho de mestrado", 
                                 description="Similaridades do professor com o tema do trabalho de mestrado")
     pontuacao: Optional[int] = Field(default = 0, title="Pontuação do professor", description="Em quantas pesquisas o professor foi encontrado")
-    relevante: Optional[bool] = Field(default=None, title="Relevante", description="Se o professor é relevante para o trabalho de mestrado")
     justificativa_relevancia: Optional[str] = Field(default=None, title="Justificativa", description="Justificativa da relevância ou falta de relevancia do professor para o trabalho de mestrado")
     
     def from_tuple_json_similarity(data: tuple[Document, float]):
@@ -94,8 +93,7 @@ class ListaProfessores(BaseModel):
         return self
     
 class RelevanciaProfessor(BaseModel):
-    '''Classe que representa a relevância do professor para um trabalho de mestrado'''
-    relevante: Optional[bool] = Field(default=None, title="Relevante", description="Se o professor é relevante para o trabalho de mestrado")
+    '''Classe que representa a justificativa da relevância do professor para um trabalho de mestrado'''
     justificativa: str = Field(..., title="Justificativa", description="Justificativa da relevância ou falta de relevancia do professor para o trabalho de mestrado")
     nome: Optional[str] = Field(default=None, title="Nome", description="Professor que avalia o trabalho de mestrado")
     #uuid: Optional[str] = Field(default=None, title="UUID", description="UUID do professor que avalia o trabalho de mestrado")
